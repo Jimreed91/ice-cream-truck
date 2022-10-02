@@ -13,9 +13,8 @@
 ActiveRecord::Schema.define(version: 2022_09_30_132345) do
 
   create_table "products", force: :cascade do |t|
-    t.decimal "price"
-    t.integer "start_quantity"
-    t.integer "product_type"
+    t.decimal "price", default: "100.0"
+    t.string "type"
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -24,7 +23,8 @@ ActiveRecord::Schema.define(version: 2022_09_30_132345) do
   create_table "truck_products", force: :cascade do |t|
     t.integer "truck_id", null: false
     t.integer "product_id", null: false
-    t.integer "number_sold", default: 0
+    t.integer "start_quantity"
+    t.integer "sold"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["product_id"], name: "index_truck_products_on_product_id"
