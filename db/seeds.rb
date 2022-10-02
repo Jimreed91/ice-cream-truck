@@ -7,15 +7,21 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 products = Product.create([
-  { price: 0.50, start_quantity: 5, product_type: :icecream, name: "Pistachio" },
-  { price: 0.50, start_quantity: 5, product_type: :icecream, name: "Chocolate" },
-  { price: 0.50, start_quantity: 5, product_type: :icecream, name: "Mint" },
-  { price: 0.50, start_quantity: 5, product_type: :icecream, name: "Strawberry" },
-  { price: 0.50, start_quantity: 2, product_type: :snackbar, name: "Twix" },
-  { price: 0.50, start_quantity: 2, product_type: :snackbar, name: "Kitkat" },
-  { price: 0.50, start_quantity: 5, product_type: :shaved_ice, name: "Peach" }
+  { price: 0.50, type: "Icecream", name: "Pistachio" },
+  { price: 0.50, type: "Icecream", name: "Chocolate" },
+  { price: 0.50, type: "Icecream", name: "Mint" },
+  { price: 0.50, type: "Icecream", name: "Strawberry" },
+  { price: 0.50, type: "Snackbar", name: "Twix" },
+  { price: 0.50, type: "Snackbar", name: "Kitkat" },
+  { price: 0.50, type: "ShavedIce", name: "Peach" }
 ])
 
 first_truck = Truck.create()
 
-first_truck.products << products
+products.each do |product|
+  if product.type == "Icecream" || product.type == "Snackbar"
+    TruckProduct.create(product: product, truck: first_truck, start_quantity: 30)
+  else
+    TruckProduct.create(product: product, truck: first_truck, start_quantity: 15)
+  end
+end

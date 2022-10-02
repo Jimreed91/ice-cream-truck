@@ -23,8 +23,8 @@ ActiveRecord::Schema.define(version: 2022_09_30_132345) do
   create_table "truck_products", force: :cascade do |t|
     t.integer "truck_id", null: false
     t.integer "product_id", null: false
-    t.integer "start_quantity"
-    t.integer "sold"
+    t.integer "start_quantity", default: 0
+    t.integer "sold", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["product_id"], name: "index_truck_products_on_product_id"

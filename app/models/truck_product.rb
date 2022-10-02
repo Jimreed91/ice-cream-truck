@@ -5,6 +5,6 @@ class TruckProduct < ApplicationRecord
 
   # Ex:- scope :active, -> {where(:active => true)}
   def stock
-    product.start_quantity - number_sold
+    start_quantity - sold
   end
 end
