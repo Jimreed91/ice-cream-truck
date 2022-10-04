@@ -14,7 +14,7 @@ json.truck do @truck
     json.in_stock @truck.truck_products.find_by(product: snackbar).stock
   end
 
-  json.shaved_ice @truck.products.shaved_ices do |shaved_ice|
+  json.shaved_ices @truck.products.shaved_ices do |shaved_ice|
     json.name shaved_ice.name
     json.in_stock @truck.truck_products.find_by(product: shaved_ice).stock
   end

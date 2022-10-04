@@ -9,5 +9,6 @@ class TrucksController < ApplicationController
     # }
   end
 
+
 end
 # products.icecream.as_json(only: [:name, :price]),
