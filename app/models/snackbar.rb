@@ -1,0 +1,2 @@
+class Snackbar < Product
+end
