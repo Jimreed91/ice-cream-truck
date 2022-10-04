@@ -1,8 +1,7 @@
-
-json.truck do @truck
+json.truck do
+  @truck
   json.truck_id @truck.id
   json.profit @truck.profit
-
 
   json.icecreams @truck.products.icecreams do |icecream|
     json.flavour icecream.name
