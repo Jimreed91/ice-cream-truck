@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
-  get 'order_products/create'
-  resources :trucks, only: :show
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  resources :order_products, only: :create
+
+  # get 'order/create'
+  # get 'order/update'
+  # get 'order/delete'
+  resources :trucks, only: :show do
+    resources :order, only: [:create, :update, :delete]
+  end
 end
