@@ -1,6 +1,7 @@
 class TrucksController < ApplicationController
   def show
     @truck = Truck.find(params[:id])
+    render status:200
     # render json: {
     #   truck_id: @truck.id,
     #   icecreams: @truck.truck_products.as_json(include: :product),

@@ -7,4 +7,11 @@ class Product < ApplicationRecord
   scope :shaved_ices, -> { where(type: 'ShavedIce') }
   # Ex:- scope :active, -> {where(:active => true)}
   # Ex:- scope :active, -> {where(:active => true)}
+
+
+  def truck_stock(truck)
+    truck_products.find_by(truck: truck).stock
+  end
+
+
 end

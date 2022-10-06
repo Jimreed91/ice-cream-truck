@@ -34,7 +34,4 @@
 #     product_stock = product.truck_products.find_by(params[:truck_id]).stock
 #   end
 
-
-
-
 # end
