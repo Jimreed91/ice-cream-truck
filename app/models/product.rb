@@ -1,5 +1,5 @@
 class Product < ApplicationRecord
-  has_many :trucks_products
+  has_many :truck_products
   has_many :trucks, through: :truck_products
 
   scope :icecreams, -> { where(type: 'Icecream') }
@@ -7,4 +7,8 @@ class Product < ApplicationRecord
   scope :shaved_ices, -> { where(type: 'ShavedIce') }
   # Ex:- scope :active, -> {where(:active => true)}
   # Ex:- scope :active, -> {where(:active => true)}
+
+  def truck_stock(truck)
+    truck_products.find_by(truck: truck).stock
+  end
 end

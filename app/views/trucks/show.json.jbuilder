@@ -1,5 +1,4 @@
 json.truck do
-  @truck
   json.truck_id @truck.id
   json.profit @truck.profit
 

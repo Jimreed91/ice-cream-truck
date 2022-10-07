@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
-  resources :trucks, only: :show
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  # get 'order/create'
+  # get 'order/update'
+  # get 'order/delete'
+  resources :health, only: :index
+  resources :trucks, only: :show do
+    resources :order, only: %i[create update delete]
+  end
 end
