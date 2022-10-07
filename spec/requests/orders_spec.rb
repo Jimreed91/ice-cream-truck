@@ -42,7 +42,6 @@ RSpec.describe 'Orders', type: :request do
 
   describe 'Put /order' do
     it 'Increases truck profit by correct amount' do
-
       truck = FactoryBot.create(:truck, :with_truck_products)
       orders = truck.orders << FactoryBot.build(:order)
       quantity = rand(1..6)

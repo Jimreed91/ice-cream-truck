@@ -5,8 +5,6 @@ class Product < ApplicationRecord
   scope :icecreams, -> { where(type: 'Icecream') }
   scope :snackbars, -> { where(type: 'Snackbar') }
   scope :shaved_ices, -> { where(type: 'ShavedIce') }
-  # Ex:- scope :active, -> {where(:active => true)}
-  # Ex:- scope :active, -> {where(:active => true)}
 
   def truck_stock(truck)
     truck_products.find_by(truck: truck).stock
