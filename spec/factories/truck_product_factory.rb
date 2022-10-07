@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :truck_product do
-    start_quantity {10}
-    sold {0}
+    start_quantity { 10 }
+    sold { 0 }
 
     trait :with_icecream do
       after(:build) do |truck_product|
