@@ -1,4 +1,4 @@
-class OrderController < ApplicationController
+class OrdersController < ApplicationController
   before_action :set_product, :set_order, :set_truck_product, only: [:update]
 
   def create
@@ -31,6 +31,13 @@ class OrderController < ApplicationController
       render status: 400, json: { message: 'SO SORRY',
                                   stock_remaining: @truck_product.stock }
     end
+  end
+
+  def show
+    # binding.byebug
+    @order = Order.find(params[:id])
+    # render status: 200,
+    #        json: { items: @order.products {details:)  }}
   end
 
   def delete; end

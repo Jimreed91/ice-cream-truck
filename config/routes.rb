@@ -4,6 +4,6 @@ Rails.application.routes.draw do
   # get 'order/delete'
   resources :health, only: :index
   resources :trucks, only: :show do
-    resources :order, only: %i[create update delete]
+    resources :orders, except: :index
   end
 end
