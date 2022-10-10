@@ -2,6 +2,10 @@ class TrucksController < ApplicationController
   def show
     @truck = Truck.find(params[:id])
   end
+
+  def index
+    @trucks = Truck.all
+  end
 end
 # products.icecream.as_json(only: [:name, :price]),
 #   render json: {

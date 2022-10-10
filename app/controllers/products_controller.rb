@@ -1,10 +1,10 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:update, :show]
+  before_action :set_product, only: %i[update show]
+
   def create
     @product = Product.new(product_params)
-
     if @product.save
-      render status: 200,
+      render status: 201,
              json: { message: 'Created successfully',
                      product: @product }
     else
@@ -26,15 +26,20 @@ class ProductsController < ApplicationController
   def index
     @products = Product.all
 
-    render json: {
-     products: @products
-    }
+    render  status: 200,
+            json: { products: @products }
   end
 
-  def delete; end
+  def show
+    render status: 200,
+           json: {
+             product: @product.name,
+             type: @product.type,
+             price: @product.price
+           }
+  end
 
-  private
-
+private
   def product_params
     params.require(:product).permit(:price, :type, :name)
   end

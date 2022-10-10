@@ -6,4 +6,8 @@ class Truck < ApplicationRecord
   def profit
     orders.sum(&:order_total)
   end
+
+  def self.all_trucks_profit
+    all.sum(&:profit)
+  end
 end
