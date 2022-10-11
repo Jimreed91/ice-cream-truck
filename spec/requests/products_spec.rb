@@ -17,7 +17,7 @@ RSpec.describe 'Products', type: :request do
   end
 
   describe 'PUT /products/:id' do
-    it 'returns http success' do
+    it 'returns the updated product' do
       product = @truck.products[rand(1..2)]
       put "/products/#{product.id}/",
           params: { product: { type: 'Icecream', price: 150, name: 'Chunky Bacon' } },
@@ -29,10 +29,17 @@ RSpec.describe 'Products', type: :request do
   end
 
   describe 'GET /products/' do
-    it 'returns http success' do
+    it 'returns http status 200' do
       get '/products/'
       expect(response).to have_http_status(200)
     end
   end
 
+  describe 'GET /products/:id' do
+    it 'returns http status 200 if product exists' do
+      product = @truck.products[rand(1..2)]
+      get "/products/#{product.id}"
+      expect(response).to have_http_status(200)
+    end
+  end
 end

@@ -31,12 +31,12 @@ class ProductsController < ApplicationController
   end
 
   def show
-    render status: 200,
-           json: {
-             product: @product.name,
-             type: @product.type,
-             price: @product.price
-           }
+      render status: 200,
+            json: {
+              product: @product.name,
+              type: @product.type,
+              price: @product.price
+            }
   end
 
 private
