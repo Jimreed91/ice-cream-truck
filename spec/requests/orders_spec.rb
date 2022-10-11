@@ -22,9 +22,7 @@ RSpec.describe 'Orders', type: :request do
       expect(json['message']).to eq('ENJOY')
       expect(orders[0].products.length).to eq(1)
     end
-  end
 
-  describe 'Put /orders' do
     it 'Does not add item to order if not in stock' do
       truck = FactoryBot.create(:truck, :with_truck_products)
       orders = truck.orders << FactoryBot.build(:order)
