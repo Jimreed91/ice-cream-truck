@@ -1,8 +1,7 @@
 class OrdersController < ApplicationController
-  before_action :set_order, only: [:update]
+  before_action :set_order, only: [:update, :commit]
 
   def create
-    p order_params
     @order = Order.new(order_params)
     @order.truck_id = params[:truck_id]
 
@@ -14,13 +13,46 @@ class OrdersController < ApplicationController
   end
 
   def update
+    if @order.status == 'accepted'
+      render status: 400, json: {
+        error: 'Order has already been accepted!'
+      }
+    end
+
     if @order.update(order_params)
       render status: 200, json: {
         message: 'Order updated'
       }
     else
       render status: 400, json: {
-        errors: @order.errors.messages
+        error: @order.errors.messages
+      }
+    end
+  end
+
+  def commit
+    @truck = @order.truck
+
+
+    @unavailable = @order.order_products.select do |order_product|
+      truck_product = TruckProduct.find_by(truck: @truck,
+                                           product: order_product.product)
+      order_product.quantity > truck_product.stock
+    end
+
+    if @unavailable.empty?
+      @order.update!(status: 'accepted')
+      @order.order_products.each do |op|
+        truck_product = @truck.truck_products.find_by(product: op.product)
+        truck_product.sell(op.quantity)
+      end
+      render status: 200, json: {
+        message: 'ENJOY!',
+        order: @order
+      }
+    else
+      render status: 400, json: {
+        message: 'SO SORRY!'
       }
     end
   end
