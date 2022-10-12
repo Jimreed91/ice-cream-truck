@@ -29,7 +29,7 @@ RSpec.describe 'Orders', type: :request do
   describe 'Put /orders/:id' do
     it 'updates order details' do
       truck = FactoryBot.create(:truck, :with_truck_products)
-      order = truck.orders.create()
+      order = truck.orders.create
       order.order_products.create(quantity: 5, product_id: 3)
       put "/orders/#{truck.orders.first.id}",
           params: { order: {
