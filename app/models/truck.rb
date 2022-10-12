@@ -4,10 +4,10 @@ class Truck < ApplicationRecord
   has_many :orders
 
   def profit
-    orders.sum(&:order_total)
+    orders.sum(:total)
   end
 
   def self.all_trucks_profit
-    all.sum(&:profit)
+    Order.sum(:profit)
   end
 end

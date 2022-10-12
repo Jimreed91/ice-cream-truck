@@ -5,11 +5,6 @@ class OrderProduct < ApplicationRecord
 
   before_save :set_price
 
-  # total price for this product in chosen quantity
-  def product_total
-    unit_price * quantity
-  end
-
   private
 
   def set_price

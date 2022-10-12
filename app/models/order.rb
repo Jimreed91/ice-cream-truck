@@ -4,7 +4,9 @@ class Order < ApplicationRecord
   has_many :products, through: :order_products
   validates :truck, presence: true
 
-  def order_total
-    order_products.sum(&:product_total)
+  accepts_nested_attributes_for :order_products, reject_if: :all_blank, allow_destroy: true, update_only: true
+
+  def set_total
+    update(total: order.order_products.sum('order_products.unit_price * order_products.quantity'))
   end
 end
