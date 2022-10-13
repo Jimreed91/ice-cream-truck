@@ -19,7 +19,7 @@ RSpec.describe 'Orders', type: :request do
   end
 
   describe 'PUT /orders/:id' do
-    it 'updates order details' do
+    it 'updates order details with valid params' do
       truck = FactoryBot.create(:truck, :with_truck_products)
       order = truck.orders.create
       order.order_products.create(quantity: 5, product_id: 3)
@@ -30,10 +30,26 @@ RSpec.describe 'Orders', type: :request do
                                           product_id: 1 }]
           } },
           as: :json
-      p truck.orders.first.order_products
       expect(response).to have_http_status(200)
       expect(truck.orders[0].products.length).to eq(1)
       expect(truck.orders[0].order_products.first.quantity).to eq(1)
+    end
+  end
+
+  describe 'PUT /orders/:id' do
+    it 'does not update order details without valid params' do
+      truck = FactoryBot.create(:truck, :with_truck_products)
+      order = truck.orders.create
+      order.order_products.create(quantity: 5, product_id: 3)
+      put "/orders/#{truck.orders.first.id}",
+          params: { order: {
+            order_products_attributes: [{ id: 1,
+                                          quantity: 1,
+                                          product_id: 99 }]
+          } },
+          as: :json
+      expect(response).to have_http_status(400)
+      expect(truck.orders[0].order_products.first.quantity).to eq(5)
     end
   end
 
@@ -68,6 +84,7 @@ RSpec.describe 'Orders', type: :request do
       expect(truck.profit).to eq(0)
       expect(truck.products[0].truck_products[0].sold).to eq(0)
       expect(truck.products[0].truck_products[0].stock).to eq(10)
+      expect(json['cant_fill'].length).to eq(1)
     end
   end
 end
