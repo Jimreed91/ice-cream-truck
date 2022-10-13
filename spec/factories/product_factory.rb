@@ -3,19 +3,19 @@ FactoryBot.define do
     trait :icecream do
       name { 'Chocolate' }
       type { 'Icecream' }
-      price { 199 }
+      price { 50 }
     end
 
     trait :snackbar do
       name { 'Snickers' }
       type { 'Snackbar' }
-      price { 45 }
+      price { 50 }
     end
 
     trait :shaved_ice do
       name { 'Sherbet' }
       type { 'ShavedIce' }
-      price { 100 }
+      price { 50 }
     end
   end
 end

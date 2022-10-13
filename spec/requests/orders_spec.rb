@@ -1,15 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Orders', type: :request do
-  # describe 'Post /orders' do
-  #   it 'Creates a new order' do
-  #     truck = FactoryBot.create(:truck)
-  #     post "/trucks/#{truck.id}/orders/"
-  #     expect(response).to have_http_status(201)
-  #   end
-  # end
-
-  describe 'Post trucks/:id/orders' do
+  describe 'POST trucks/:id/orders' do
     it 'creates an order with valid attributes' do
       truck = FactoryBot.create(:truck, :with_truck_products)
       post "/trucks/#{truck.id}/orders/",
@@ -20,13 +12,13 @@ RSpec.describe 'Orders', type: :request do
                                            product_id: 2 }]
            } },
            as: :json
-      json = JSON.parse(response.body)
       expect(response).to have_http_status(201)
       expect(truck.orders[0].products.length).to eq(2)
+      expect(truck.profit).to eq(0)
     end
   end
 
-  describe 'Put /orders/:id' do
+  describe 'PUT /orders/:id' do
     it 'updates order details' do
       truck = FactoryBot.create(:truck, :with_truck_products)
       order = truck.orders.create
@@ -39,24 +31,43 @@ RSpec.describe 'Orders', type: :request do
           } },
           as: :json
       p truck.orders.first.order_products
-      json = JSON.parse(response.body)
       expect(response).to have_http_status(200)
       expect(truck.orders[0].products.length).to eq(1)
       expect(truck.orders[0].order_products.first.quantity).to eq(1)
     end
   end
 
-  # describe 'Put /orders' do
-  #   it 'Increases truck profit by correct amount' do
-  #     truck = FactoryBot.create(:truck, :with_truck_products)
-  #     orders = truck.orders << FactoryBot.build(:order)
-  #     quantity = rand(1..6)
-  #     put "/trucks/#{truck.id}/orders/#{orders[0].id}",
-  #         params: { order: { quantity: quantity,
-  #                            product_id: truck.products.first.id } },
-  #         as: :json
-  #     expect(response).to have_http_status(200)
-  #     expect(truck.profit).to eq(truck.products.first.price * quantity)
-  #   end
-  # end
+  describe 'PATCH .orders/:id' do
+    it 'accepts order if stock is available' do
+      truck = FactoryBot.create(:truck, :with_truck_products, :with_order)
+      truck.orders.first.order_products.create([
+                                                 { product: truck.products[0], quantity: 3 },
+                                                 { product: truck.products[1], quantity: 3 }
+                                               ])
+      patch "/orders/#{truck.orders.first.id}"
+      json = JSON.parse(response.body)
+      expect(response).to have_http_status(200)
+      expect(json['message']).to eq('ENJOY!')
+      expect(truck.profit).to eq(300)
+      expect(truck.products[0].truck_products[0].sold).to eq(3)
+      expect(truck.products[0].truck_products[0].stock).to eq(7)
+    end
+  end
+
+  describe 'PATCH .orders/:id' do
+    it 'does not accept order if not enough stock' do
+      truck = FactoryBot.create(:truck, :with_truck_products, :with_order)
+      truck.orders.first.order_products.create([
+                                                 { product: truck.products[0], quantity: 3 },
+                                                 { product: truck.products[1], quantity: 11 }
+                                               ])
+      patch "/orders/#{truck.orders.first.id}"
+      json = JSON.parse(response.body)
+      expect(response).to have_http_status(400)
+      expect(json['message']).to eq('SO SORRY!')
+      expect(truck.profit).to eq(0)
+      expect(truck.products[0].truck_products[0].sold).to eq(0)
+      expect(truck.products[0].truck_products[0].stock).to eq(10)
+    end
+  end
 end

@@ -5,10 +5,7 @@ class OrderProduct < ApplicationRecord
 
   before_commit :set_price
 
-
-
   def set_price
     update_column(:unit_price, product.price)
   end
-
 end

@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :set_order, only: [:update, :commit]
+  before_action :set_order, only: %i[update commit]
 
   def create
     @order = Order.new(order_params)
@@ -32,7 +32,6 @@ class OrdersController < ApplicationController
 
   def commit
     @truck = @order.truck
-
 
     @unavailable = @order.order_products.select do |order_product|
       truck_product = TruckProduct.find_by(truck: @truck,

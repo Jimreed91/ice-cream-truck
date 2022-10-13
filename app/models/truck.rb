@@ -8,6 +8,6 @@ class Truck < ApplicationRecord
   end
 
   def self.all_trucks_profit
-    Order.where(status: 'accepted').sum(:total)
+    Order.all.where(status: 'accepted').sum(:total)
   end
 end
