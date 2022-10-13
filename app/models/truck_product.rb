@@ -7,4 +7,8 @@ class TruckProduct < ApplicationRecord
   def stock
     start_quantity - sold
   end
+
+  def sell(num)
+    update(sold: sold + num)
+  end
 end

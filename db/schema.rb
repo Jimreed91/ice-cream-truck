@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(version: 20_221_004_042_225) do
     t.integer 'order_id', null: false
     t.integer 'product_id', null: false
     t.integer 'quantity', default: 0
-    t.decimal 'unit_price', default: '0.0'
+    t.integer 'unit_price', default: 0
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
     t.index ['order_id'], name: 'index_order_products_on_order_id'
@@ -24,13 +24,15 @@ ActiveRecord::Schema.define(version: 20_221_004_042_225) do
 
   create_table 'orders', force: :cascade do |t|
     t.integer 'truck_id', null: false
+    t.integer 'total', default: 0
+    t.string 'status', default: 'pending'
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
     t.index ['truck_id'], name: 'index_orders_on_truck_id'
   end
 
   create_table 'products', force: :cascade do |t|
-    t.decimal 'price', default: '100.0'
+    t.integer 'price', default: 100
     t.string 'type'
     t.string 'name'
     t.datetime 'created_at', precision: 6, null: false
@@ -49,7 +51,7 @@ ActiveRecord::Schema.define(version: 20_221_004_042_225) do
   end
 
   create_table 'trucks', force: :cascade do |t|
-    t.decimal 'profit', default: '0.0'
+    t.integer 'profit', default: 0
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
   end

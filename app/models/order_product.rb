@@ -3,16 +3,9 @@ class OrderProduct < ApplicationRecord
   belongs_to :product
   validates :order, :product, :quantity, presence: true
 
-  before_save :set_price
-
-  # total price for this product in chosen quantity
-  def product_total
-    unit_price * quantity
-  end
-
-  private
+  before_commit :set_price
 
   def set_price
-    self.unit_price = product.price
+    update_column(:unit_price, product.price)
   end
 end

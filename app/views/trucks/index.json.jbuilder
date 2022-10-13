@@ -1,3 +1,4 @@
-json.trucks @trucks do
-  json.total_profit @trucks.all_trucks_profit
+json.total_profit Truck.all_trucks_profit
+json.trucks @trucks.each do |truck|
+  json.truck truck
 end

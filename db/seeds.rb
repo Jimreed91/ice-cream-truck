@@ -7,13 +7,13 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 products = Product.create([
-                            { price: 0.50, type: 'Icecream', name: 'Pistachio' },
-                            { price: 0.50, type: 'Icecream', name: 'Chocolate' },
-                            { price: 0.50, type: 'Icecream', name: 'Mint' },
-                            { price: 0.50, type: 'Icecream', name: 'Strawberry' },
-                            { price: 0.50, type: 'Snackbar', name: 'Twix' },
-                            { price: 0.50, type: 'Snackbar', name: 'Kitkat' },
-                            { price: 0.50, type: 'ShavedIce', name: 'Peach' }
+                            { price: 100, type: 'Icecream', name: 'Pistachio' },
+                            { price: 50, type: 'Icecream', name: 'Chocolate' },
+                            { price: 50, type: 'Icecream', name: 'Mint' },
+                            { price: 50, type: 'Icecream', name: 'Strawberry' },
+                            { price: 50, type: 'Snackbar', name: 'Twix' },
+                            { price: 50, type: 'Snackbar', name: 'Kitkat' },
+                            { price: 50, type: 'ShavedIce', name: 'Peach' }
                           ])
 
 first_truck = Truck.create

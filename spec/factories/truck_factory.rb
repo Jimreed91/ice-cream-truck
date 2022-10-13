@@ -6,10 +6,10 @@ FactoryBot.define do
         truck.truck_products << FactoryBot.build(:truck_product, :with_snackbar)
         truck.truck_products << FactoryBot.build(:truck_product, :with_shaved_ice)
       end
-      trait :with_order do
-        after(build) do |truck|
-          truck.orders << FactoryBot.build(:order)
-        end
+    end
+    trait :with_order do
+      after(:build) do |truck|
+        truck.orders << FactoryBot.create(:order)
       end
     end
   end
